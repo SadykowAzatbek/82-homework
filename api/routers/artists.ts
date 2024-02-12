@@ -2,6 +2,7 @@ import {Router} from "express";
 import Artist from "../models/Artist";
 import mongoose from "mongoose";
 import {ArtistTypes} from "../types";
+import {imageUpload} from "../multer";
 
 const artistsRouter = Router();
 
@@ -15,11 +16,11 @@ artistsRouter.get('/', async (req, res, next) => {
   }
 });
 
-artistsRouter.post('/', async (req, res, next) => {
+artistsRouter.post('/', imageUpload.single('image'),  async (req, res, next) => {
   try {
     const artistData: ArtistTypes = {
       name: req.body.name,
-      image: req.body.image,
+      image: req.file ? req.file.filename : null,
       info: req.body.info,
     };
 

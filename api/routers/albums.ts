@@ -2,6 +2,7 @@ import {Router} from "express";
 import Album from "../models/Album";
 import mongoose, {mongo, Types} from "mongoose";
 import {AlbumTypes} from "../types";
+import {imageUpload} from "../multer";
 
 const albumsRouter = Router();
 
@@ -21,13 +22,13 @@ albumsRouter.get('/', async (req, res, next) => {
   }
 });
 
-albumsRouter.post('/', async (req, res, next) => {
+albumsRouter.post('/',imageUpload.single('image'), async (req, res, next) => {
   try {
     const albumData: AlbumTypes = {
       artist: req.body.artist,
       name: req.body.name,
       release: req.body.release,
-      image: req.body.image,
+      image: req.file ? req.file.filename : null,
     };
 
     const album = new Album(albumData);

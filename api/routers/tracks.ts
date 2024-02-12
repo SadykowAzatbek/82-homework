@@ -1,6 +1,5 @@
 import {Router} from "express";
 import Track from "../models/Track";
-import track from "../models/Track";
 import {TrackTypes} from "../types";
 import mongoose from "mongoose";
 
