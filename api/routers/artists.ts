@@ -1,6 +1,7 @@
 import {Router} from "express";
 import Artist from "../models/Artist";
 import mongoose from "mongoose";
+import {ArtistTypes} from "../types";
 
 const artistsRouter = Router();
 
@@ -16,7 +17,7 @@ artistsRouter.get('/', async (req, res, next) => {
 
 artistsRouter.post('/', async (req, res, next) => {
   try {
-    const artistData = {
+    const artistData: ArtistTypes = {
       name: req.body.name,
       image: req.body.image,
       info: req.body.info,
