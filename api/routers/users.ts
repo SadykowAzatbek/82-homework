@@ -1,7 +1,6 @@
 import {Router} from "express";
 import User from "../models/User";
 import mongoose, {mongo} from "mongoose";
-import bcrypt from "bcrypt";
 
 const usersRouter = Router();
 

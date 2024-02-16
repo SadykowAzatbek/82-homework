@@ -55,13 +55,13 @@ albumsRouter.get('/:id', async (req, res, next) => {
     try {
       _id = new Types.ObjectId(req.params.id);
     } catch {
-      return res.status(404).send({error: 'Wrong objectId!'});
+      return res.status(422).send({error: 'Wrong objectId!'});
     }
 
     const albums = await Album.findById(_id).populate('artist');
 
     if (!albums) {
-      return res.status(404).send({error: 'Not found!'});
+      return res.status(422).send({error: 'Not found!'});
     }
 
     res.send(albums);
