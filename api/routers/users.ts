@@ -20,7 +20,7 @@ usersRouter.post('/', async (req, res, next) => {
     }
 
     if (err instanceof mongo.MongoServerError && err.code === 11000) {
-      return res.status(422).send({message: 'Album name should be unique'});
+      return res.status(422).send({message: 'Username should be unique'});
     }
 
     next(err);
