@@ -7,15 +7,11 @@ const tracksRouter = Router();
 
 tracksRouter.get('/', async (req, res, next) => {
   try {
-    const tracks = await Track.find();
-
     const albumIdParam = req.query.album as string;
 
-    if (albumIdParam) {
-      res.send(tracks.filter(track => track.album.toString() === albumIdParam));
-    }
+    const tracks = await Track.find({album: albumIdParam});
 
-    res.send(tracks);
+    return res.send(tracks);
   } catch (err) {
     next(err);
   }

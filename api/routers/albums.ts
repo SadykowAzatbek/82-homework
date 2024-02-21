@@ -8,13 +8,9 @@ const albumsRouter = Router();
 
 albumsRouter.get('/', async (req, res, next) => {
   try {
-    const results = await Album.find();
-
     const artistIdParam = req.query.artist as string;
 
-    if (artistIdParam) {
-      res.send(results.filter(album => album.artist.toString() === artistIdParam));
-    }
+    const results = await Album.find({artist: artistIdParam});
 
     return res.send(results);
   } catch (err) {
