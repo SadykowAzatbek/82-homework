@@ -1,20 +1,20 @@
 import './App.css';
-import {Grid, Typography} from '@mui/material';
+import {Alert, Typography} from '@mui/material';
 import {Route, Routes} from 'react-router-dom';
 import Artists from './components/Artists/Artists.tsx';
+import Albums from './components/Albums/Albums.tsx';
 
 function App() {
-
   return (
     <>
       <header>
-        <Grid>
-          <Typography variant="h3">Music App</Typography>
-        </Grid>
+        <Typography variant="h3">Music App</Typography>
       </header>
       <Routes>
         <Route path="/" element={<Artists />} />
-        <Route path="*" element={<strong>Not found!</strong>} />
+        <Route path="/albums" element={<Albums />} />
+        <Route path="/albums/:id" element={<Albums />} />
+        <Route path="*" element={<Alert severity="error">Not found!</Alert>} />
       </Routes>
     </>
   )

@@ -10,7 +10,7 @@ albumsRouter.get('/', async (req, res, next) => {
   try {
     const artistIdParam = req.query.artist as string;
 
-    const results = await Album.find({artist: artistIdParam});
+    const results = await Album.find({artist: artistIdParam}).sort({release: -1});
 
     return res.send(results);
   } catch (err) {

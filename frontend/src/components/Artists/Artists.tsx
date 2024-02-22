@@ -21,14 +21,14 @@ const Artists = () => {
   const ImageCardMedia = styled(CardMedia)({
     height: 0,
     paddingTop: '56.25%',
-  })
+  });
 
   return (
     <>
       <Grid container spacing={3} mt={3}>
         {!isLoading ? artists.map((elem) => (
           <Grid item xs={3} key={elem._id}>
-            <RouterLink to={`/artist/album`}>
+            <RouterLink to={`/albums/${elem._id}`}>
               <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                   {elem.image !== null ? <ImageCardMedia image={'http://localhost:8000' + '/' + elem.image}/> : ''}
