@@ -9,7 +9,7 @@ tracksRouter.get('/', async (req, res, next) => {
   try {
     const albumIdParam = req.query.album as string;
 
-    const tracks = await Track.find({album: albumIdParam});
+    const tracks = await Track.find({album: albumIdParam}).sort({number: 1});
 
     return res.send(tracks);
   } catch (err) {
@@ -23,6 +23,7 @@ tracksRouter.post('/', async (req, res, next) => {
       album: req.body.album,
       name: req.body.name,
       duration: req.body.duration,
+      number: req.body.number,
     }
 
     const track = new Track(trackData);

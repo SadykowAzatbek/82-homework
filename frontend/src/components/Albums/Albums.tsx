@@ -16,7 +16,7 @@ const Albums = () => {
 
   useEffect(() => {
     const fetchUrl = async () => {
-      if(params.id) {
+      if (params.id) {
         await dispatch(getAlbums(params.id));
       }
     };
@@ -37,7 +37,7 @@ const Albums = () => {
       <Grid container spacing={3} mt={3} alignItems="stretch">
         {!isLoading ? albums.map((elem) => (
           <Grid item xs={3} key={elem._id}>
-            <RouterLink to={``}>
+            <RouterLink to={`/tracks/${elem._id}`}>
               <Card sx={{ maxWidth: 345 }}>
                 {elem.image !== null ? <ImageCardMedia image={'http://localhost:8000' + '/' + elem.image}/> : ''}
                 <CardActionArea>

@@ -17,6 +17,7 @@ export interface TrackTypes {
   album: string;
   name: string;
   duration: string;
+  number: number;
 }
 
 export interface UserTypes {
