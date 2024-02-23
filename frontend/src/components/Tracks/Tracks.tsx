@@ -1,48 +1,63 @@
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
 import {selectIsLoading, selectTracks} from '../store/tracksSlice.ts';
 import {useEffect} from 'react';
-import {getTracks} from '../store/asynсThunks.ts';
+import {getAlbums, getArtists, getTracks} from '../store/asynсThunks.ts';
 import {useParams} from 'react-router-dom';
 import {Card, CardContent, CircularProgress, Grid, Typography} from '@mui/material';
+import {selectArtists} from '../store/artistsSlice.ts';
+import {selectAlbums} from '../store/albumsSlice.ts';
 
 const Tracks = () => {
   const dispatch = useAppDispatch();
   const tracks = useAppSelector(selectTracks);
   const isLoading = useAppSelector(selectIsLoading);
+  const artistName = useAppSelector(selectArtists);
+  const albumName = useAppSelector(selectAlbums);
 
   const params = useParams();
 
+  const album = albumName.find(elem => elem._id === params.id);
+  const artist = artistName.find(elem => elem._id === album?.artist);
+
   useEffect(() => {
     const fetchUrl = async () => {
-      if (params.id) await dispatch(getTracks(params.id));
+      if (params.id) {
+        await dispatch(getTracks(params.id));
+
+        if (artist) {
+          await dispatch(getAlbums(artist._id));
+          await dispatch(getArtists());
+        }
+      }
     };
 
     void fetchUrl();
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   return (
-    <Grid container spacing={10} mt={3} alignItems="stretch">
-      {!isLoading ? tracks.map((elem) => (
-        <Grid item xs={3} key={elem._id}>
-          <Card sx={{ minWidth: 230 }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {'track: ' + elem.name}
-              </Typography>
-              <Typography variant="h5" component="div">
-                {'duration: ' + elem.duration}
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                {'number: ' + elem.number}
-              </Typography>
-              <Typography variant="body2">
+    <>
+      {album && artist && <Typography variant="h4">Artist: {artist.name}, Album: {album.name}</Typography>}
 
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      )) : <CircularProgress />}
-    </Grid>
+      <Grid container spacing={10} mt={3}>
+        {!isLoading ? tracks.map((elem) => (
+          <Grid item xs={3} key={elem._id}>
+            <Card sx={{ minWidth: 230 }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  {'number: ' + elem.number}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {'track: ' + elem.name}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  {'duration: ' + elem.duration}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        )) : <CircularProgress />}
+      </Grid>
+    </>
   );
 };
 
