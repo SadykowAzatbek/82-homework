@@ -1,11 +1,13 @@
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
-import {selectIsLoading, selectTracks} from '../store/tracksSlice.ts';
+import {selectIsLoading, selectTracks} from './tracksSlice.ts';
 import {useEffect} from 'react';
-import {getAlbums, getArtists, getTracks} from '../store/asynсThunks.ts';
 import {useParams} from 'react-router-dom';
 import {Card, CardContent, CircularProgress, Grid, Typography} from '@mui/material';
-import {selectArtists} from '../store/artistsSlice.ts';
-import {selectAlbums} from '../store/albumsSlice.ts';
+import {selectArtists} from '../Artists/artistsSlice.ts';
+import {selectAlbums} from '../Albums/albumsSlice.ts';
+import {getTracks} from './trackThunks.ts';
+import {getAlbums} from '../Albums/albumThunks.ts';
+import {getArtists} from '../Artists/artistsThunks.ts';
 
 const Tracks = () => {
   const dispatch = useAppDispatch();

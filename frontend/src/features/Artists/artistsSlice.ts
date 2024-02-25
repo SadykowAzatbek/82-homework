@@ -1,7 +1,7 @@
 import {ArtistsTypes} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {getArtists} from './asynсThunks.ts';
 import {RootState} from '../../App/store.ts';
+import {getArtists} from './artistsThunks.ts';
 
 export interface ArtistsData {
   artists: ArtistsTypes[];

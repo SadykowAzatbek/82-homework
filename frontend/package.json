@@ -13,7 +13,7 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.10",
+    "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.10",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.2.1",

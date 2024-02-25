@@ -1,9 +1,9 @@
 import {Card, CardActionArea, CardContent, CardMedia, CircularProgress, Grid, styled, Typography} from '@mui/material';
 import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
-import {selectArtists, selectIsLoading} from '../store/artistsSlice.ts';
-import {getArtists} from '../store/asynсThunks.ts';
+import {selectArtists, selectIsLoading} from './artistsSlice.ts';
 import {Link as RouterLink} from 'react-router-dom';
+import {getArtists} from './artistsThunks.ts';
 
 const Artists = () => {
   const dispatch = useAppDispatch();
