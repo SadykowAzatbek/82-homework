@@ -9,6 +9,7 @@ import AppToolbar from './components/UI/AppToolbar.tsx';
 import Login from './features/Users/Login.tsx';
 import {useAppSelector} from './App/hooks.ts';
 import {selectUser} from './features/Users/usersSlice.ts';
+import TracksHistory from './features/Tracks/TracksHistory.tsx';
 
 function App() {
   const user = useAppSelector(selectUser);
@@ -24,6 +25,7 @@ function App() {
         <Route path="/tracks/:id" element={user && <Tracks />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/track_history" element={<TracksHistory />} />
         <Route path="*" element={<Alert severity="error">Not found!</Alert>} />
       </Routes>
     </>

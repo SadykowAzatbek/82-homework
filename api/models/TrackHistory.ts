@@ -1,4 +1,4 @@
-import {Schema, model, Types} from "mongoose";
+import {Schema, model} from "mongoose";
 import User from "./User";
 import Track from "./Track";
 
@@ -27,7 +27,7 @@ const TrackHistorySchema = new Schema({
       message: 'Track does not exist!',
     },
   },
-  dateTime: {
+  datetime: {
     type: Date,
     required: true,
     default: () => new Date(),

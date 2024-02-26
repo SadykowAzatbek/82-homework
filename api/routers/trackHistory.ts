@@ -1,14 +1,24 @@
 import {Router} from "express";
 import TrackHistory from "../models/TrackHistory";
 import mongoose from "mongoose";
-import auth from "../middleware/auth";
+import auth, {RequestWithUser} from "../middleware/auth";
 
 const trackHistoryRouter = Router();
 
-trackHistoryRouter.post('/', auth, async (req, res, next) => {
+trackHistoryRouter.get('/', auth, async (req, res, next) => {
+  try {
+    const tracksHistory = await TrackHistory.find().populate('track');
+
+    return res.send(tracksHistory);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+trackHistoryRouter.post('/', auth, async (req: RequestWithUser, res, next) => {
   try {
     const trackHistory = new TrackHistory({
-      user: req.body.user,
+      user: req.user?._id,
       track: req.body.track,
       datetime: req.body.datetime,
     });

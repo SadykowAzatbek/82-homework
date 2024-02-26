@@ -2,12 +2,14 @@ import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
 import {selectIsLoading, selectTracks} from './tracksSlice.ts';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {Card, CardContent, CircularProgress, Grid, Typography} from '@mui/material';
+import {Avatar, Button, Card, CardContent, CircularProgress, Grid, Typography} from '@mui/material';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import {selectArtists} from '../Artists/artistsSlice.ts';
 import {selectAlbums} from '../Albums/albumsSlice.ts';
-import {getTracks} from './tracksThunks.ts';
+import {getTracks, tracksHistoryPost} from './tracksThunks.ts';
 import {getAlbums} from '../Albums/albumsThunks.ts';
 import {getArtists} from '../Artists/artistsThunks.ts';
+import {selectUser} from '../Users/usersSlice.ts';
 
 const Tracks = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +17,7 @@ const Tracks = () => {
   const isLoading = useAppSelector(selectIsLoading);
   const artistName = useAppSelector(selectArtists);
   const albumName = useAppSelector(selectAlbums);
+  const user = useAppSelector(selectUser);
 
   const params = useParams();
 
@@ -36,6 +39,12 @@ const Tracks = () => {
     void fetchUrl();
   }, [dispatch, params.id]);
 
+  const tracksHistory = async (data: string) => {
+    if (user) {
+      await dispatch(tracksHistoryPost({token: user.token, track: data}));
+    }
+  };
+
   return (
     <>
       {album && artist && <Typography variant="h4">Artist: {artist.name}, Album: {album.name}</Typography>}
@@ -54,6 +63,12 @@ const Tracks = () => {
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                   {'duration: ' + elem.duration}
                 </Typography>
+                <Button sx={{p: '3px'}} color='inherit' onClick={() => tracksHistory(elem._id)}>
+                  <Avatar sx={{mr: 1, bgcolor: 'error.main'}}>
+                    <PlayCircleIcon />
+                  </Avatar>
+                  Play
+                </Button>
               </CardContent>
             </Card>
           </Grid>
