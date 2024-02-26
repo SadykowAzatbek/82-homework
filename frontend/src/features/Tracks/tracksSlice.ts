@@ -1,7 +1,7 @@
 import {TracksTypes} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
 import {RootState} from '../../App/store.ts';
-import {getTracks} from './trackThunks.ts';
+import {getTracks} from './tracksThunks.ts';
 
 
 export interface Tracks {

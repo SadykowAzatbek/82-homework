@@ -4,7 +4,7 @@ import {selectAlbums, selectIsLoading} from './albumsSlice.ts';
 import {Card, CardActionArea, CardContent, CardMedia, CircularProgress, Grid, styled, Typography} from '@mui/material';
 import {Link as RouterLink, useParams} from 'react-router-dom';
 import {selectArtists} from '../Artists/artistsSlice.ts';
-import {getAlbums} from './albumThunks.ts';
+import {getAlbums} from './albumsThunks.ts';
 import {getArtists} from '../Artists/artistsThunks.ts';
 
 const Albums = () => {

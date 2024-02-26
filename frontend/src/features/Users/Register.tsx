@@ -5,11 +5,11 @@ import {Avatar, Box, Button, Container, Grid, TextField, Typography, Link} from 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
-import {selectorRegisterError} from './usersSlice.ts';
-import {newUser} from './userThunks.ts';
+import {selectRegisterError} from './usersSlice.ts';
+import {newUser} from './usersThunks.ts';
 const Register = () => {
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectorRegisterError);
+  const error = useAppSelector(selectRegisterError);
 
   const navigate = useNavigate();
 

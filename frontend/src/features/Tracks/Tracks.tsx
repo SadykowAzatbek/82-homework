@@ -5,8 +5,8 @@ import {useParams} from 'react-router-dom';
 import {Card, CardContent, CircularProgress, Grid, Typography} from '@mui/material';
 import {selectArtists} from '../Artists/artistsSlice.ts';
 import {selectAlbums} from '../Albums/albumsSlice.ts';
-import {getTracks} from './trackThunks.ts';
-import {getAlbums} from '../Albums/albumThunks.ts';
+import {getTracks} from './tracksThunks.ts';
+import {getAlbums} from '../Albums/albumsThunks.ts';
 import {getArtists} from '../Artists/artistsThunks.ts';
 
 const Tracks = () => {
