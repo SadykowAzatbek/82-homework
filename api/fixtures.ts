@@ -260,6 +260,8 @@ const run = async () => {
       number: 7,
     },
   );
+
+  await db.close();
 };
 
 void run();
