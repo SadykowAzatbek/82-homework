@@ -4,6 +4,7 @@ export interface ArtistTypes {
   name: string;
   image: string | null;
   info: string;
+  isPublished: boolean;
 }
 
 export interface AlbumTypes {
@@ -11,6 +12,7 @@ export interface AlbumTypes {
   name: string;
   release: string;
   image: string | null;
+  isPublished: boolean;
 }
 
 export interface TrackTypes {
@@ -18,12 +20,14 @@ export interface TrackTypes {
   name: string;
   duration: string;
   number: number;
+  isPublished: boolean;
 }
 
 export interface UserTypes {
   username: string;
   password: string;
   token: string;
+  role: string;
 }
 
 interface UserMethods {

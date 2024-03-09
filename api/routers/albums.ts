@@ -3,6 +3,8 @@ import Album from "../models/Album";
 import mongoose, {mongo, Types} from "mongoose";
 import {AlbumTypes} from "../types";
 import {imageUpload} from "../multer";
+import auth from "../middleware/auth";
+import permit from "../middleware/permit";
 
 const albumsRouter = Router();
 
@@ -18,13 +20,14 @@ albumsRouter.get('/', async (req, res, next) => {
   }
 });
 
-albumsRouter.post('/',imageUpload.single('image'), async (req, res, next) => {
+albumsRouter.post('/', auth, imageUpload.single('image'), async (req, res, next) => {
   try {
     const albumData: AlbumTypes = {
       artist: req.body.artist,
       name: req.body.name,
       release: req.body.release,
       image: req.file ? req.file.filename : null,
+      isPublished: req.body.isPublished,
     };
 
     const album = new Album(albumData);
@@ -63,6 +66,54 @@ albumsRouter.get('/:id', async (req, res, next) => {
     res.send(albums);
   } catch (err) {
     next(err);
+  }
+});
+
+albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(422).send({error: 'Wrong objectId!'});
+    }
+
+    const album = await Album.findByIdAndDelete(_id);
+
+    if (!album) {
+      return res.status(403).send({error: `Album not found!`});
+    }
+
+    return res.send({message: 'Album deleted!'});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+albumsRouter.patch('/:id/togglePublished', auth, permit('admin'), async (req, res, next) => {
+  try {
+    let _id: Types.ObjectId;
+
+    try {
+      _id = new Types.ObjectId(req.params.id);
+    } catch {
+      return res.status(422).send({error: 'Wrong objectId!'});
+    }
+
+    const album = await Album.findById(_id);
+
+    if (!album) {
+      return res.status(403).send({error: `Album not found!`});
+    }
+
+    await album.updateOne({isPublished: !album.isPublished});
+    await album.save();
+
+    return res.send(album);
+
+  } catch (err) {
+    return next(err);
   }
 });
 

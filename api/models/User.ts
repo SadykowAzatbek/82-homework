@@ -28,6 +28,12 @@ const UserSchema = new Schema<UserTypes, UserModel, UserMethods>({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+    enum: ['admin', 'user'],
+    default: 'user',
+  }
 });
 
 UserSchema.methods.checkPassword = function (password: string) {
