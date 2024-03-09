@@ -1,12 +1,12 @@
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
 import {selectIsLoading, selectTracks} from './tracksSlice.ts';
 import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {Avatar, Button, Card, CardContent, CircularProgress, Grid, Typography} from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import {selectArtists} from '../Artists/artistsSlice.ts';
 import {selectAlbums} from '../Albums/albumsSlice.ts';
-import {getTracks, tracksHistoryPost} from './tracksThunks.ts';
+import {deleteTrack, getTracks, publishTrack, tracksHistoryPost} from './tracksThunks.ts';
 import {getAlbums} from '../Albums/albumsThunks.ts';
 import {getArtists} from '../Artists/artistsThunks.ts';
 import {selectUser} from '../Users/usersSlice.ts';
@@ -20,6 +20,7 @@ const Tracks = () => {
   const user = useAppSelector(selectUser);
 
   const params = useParams();
+  const navigate = useNavigate();
 
   const album = albumName.find(elem => elem._id === params.id);
   const artist = artistName.find(elem => elem._id === album?.artist);
@@ -45,6 +46,16 @@ const Tracks = () => {
     }
   };
 
+  const publish = async (id: string) => {
+    await dispatch(publishTrack(id));
+    navigate('/');
+  };
+
+  const deleteOneTrack = async (id: string) => {
+    await dispatch(deleteTrack(id));
+    navigate('/');
+  };
+
   return (
     <>
       {album && artist && <Typography variant="h4">Artist: {artist.name}, Album: {album.name}</Typography>}
@@ -52,25 +63,52 @@ const Tracks = () => {
       <Grid container spacing={10} mt={3}>
         {!isLoading ? tracks.map((elem) => (
           <Grid item xs={3} key={elem._id}>
-            <Card sx={{ minWidth: 230 }}>
+            {user?.role === 'admin' ? <Card sx={{minWidth: 230}}>
               <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                   {'number: ' + elem.number}
                 </Typography>
                 <Typography variant="h5" component="div">
                   {'track: ' + elem.name}
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                <Typography sx={{mb: 1.5}} color="text.secondary">
                   {'duration: ' + elem.duration}
                 </Typography>
-                {user && <Button sx={{p: '3px'}} color='inherit' onClick={() => tracksHistory(elem._id)}>
+                {user && user.role === 'admin' && <Typography gutterBottom component="div">
+                  Статус: {!elem.isPublished ? 'неопубликовано' : 'опубликовано'}
+                </Typography>}
+                {user && <Button sx={{p: '3px', mt: "10px"}} color="inherit" onClick={() => tracksHistory(elem._id)}>
                   <Avatar sx={{mr: 1, bgcolor: 'error.main'}}>
-                    <PlayCircleIcon />
+                    <PlayCircleIcon/>
+                  </Avatar>
+                  Play
+                </Button>}
+                {user && user.role === 'admin' ? (
+                  <Typography component="div" sx={{display: 'flex', justifyContent: 'space-between', mt: "13px"}}>
+                    <Button sx={{color: 'red'}} onClick={() => deleteOneTrack(elem._id)}>Удалить</Button>
+                    <Button onClick={() => publish(elem._id)}>Опубликовать</Button>
+                  </Typography>
+                ) : ''}
+              </CardContent>
+            </Card> : user?.role === "user" && elem.isPublished ? <Card sx={{minWidth: 230}}>
+              <CardContent>
+                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                  {'number: ' + elem.number}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {'track: ' + elem.name}
+                </Typography>
+                <Typography sx={{mb: 1.5}} color="text.secondary">
+                  {'duration: ' + elem.duration}
+                </Typography>
+                {user && <Button sx={{p: '3px'}} color="inherit" onClick={() => tracksHistory(elem._id)}>
+                  <Avatar sx={{mr: 1, bgcolor: 'error.main'}}>
+                    <PlayCircleIcon/>
                   </Avatar>
                   Play
                 </Button>}
               </CardContent>
-            </Card>
+            </Card> : ''}
           </Grid>
         )) : <CircularProgress />}
       </Grid>

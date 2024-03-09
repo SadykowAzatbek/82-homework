@@ -35,3 +35,25 @@ export const addArtists = createAsyncThunk<void, ArtistWithoutId>(
     }
   },
 );
+
+export const publishArtist = createAsyncThunk<void, string>(
+  'publish/artist',
+  async (id) => {
+    try {
+      await axiosApi.patch('/artists/' + id + '/togglePublished');
+    } catch (err) {
+      throw err;
+    }
+  },
+);
+
+export const deleteArtist = createAsyncThunk<void, string>(
+  'delete/tracks',
+  async (id) => {
+    try {
+      await axiosApi.delete('/artists/' + id);
+    } catch (err) {
+      throw err;
+    }
+  },
+);

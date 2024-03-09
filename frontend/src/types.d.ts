@@ -25,6 +25,7 @@ export interface TracksTypes {
   name: string;
   duration: string;
   number: number;
+  isPublished: boolean;
 }
 
 export type TrackWithoutId = Omit<TracksTypes, '_id'>;

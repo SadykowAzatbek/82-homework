@@ -50,3 +50,26 @@ export const addAlbum = createAsyncThunk<void, AlbumWithoutId>(
     }
   }
 );
+
+
+export const publishAlbum = createAsyncThunk<void, string>(
+  'publish/artist',
+  async (id) => {
+    try {
+      await axiosApi.patch('/albums/' + id + '/togglePublished');
+    } catch (err) {
+      throw err;
+    }
+  },
+);
+
+export const deleteAlbum = createAsyncThunk<void, string>(
+  'delete/tracks',
+  async (id) => {
+    try {
+      await axiosApi.delete('/albums/' + id);
+    } catch (err) {
+      throw err;
+    }
+  },
+);
