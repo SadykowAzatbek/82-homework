@@ -24,7 +24,6 @@ export const addArtists = createAsyncThunk<void, ArtistWithoutId>(
 
       formData.append('name', data.name);
       formData.append('info', data.info);
-      formData.append('isPublished', String(data.isPublished));
 
       if (data.image) {
         formData.append('image', data.image);

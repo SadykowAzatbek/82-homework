@@ -35,6 +35,10 @@ const UserMenu: React.FC<Props> = ({user}) => {
     navigate('/new/artist');
   };
 
+  const toNewAlbum = () => {
+    navigate('/new/album');
+  };
+
   return (
     <>
       <Button color="inherit" onClick={handleClick}>
@@ -42,7 +46,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} keepMounted>
         <MenuItem onClick={toNewArtist}>Add artist</MenuItem>
-        <MenuItem>Add album</MenuItem>
+        <MenuItem onClick={toNewAlbum}>Add album</MenuItem>
         <MenuItem>Add track</MenuItem>
         <MenuItem onClick={handleNav}>Track history</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>

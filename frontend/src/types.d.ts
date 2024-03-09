@@ -14,7 +14,10 @@ export interface AlbumsTypes {
   name: string;
   release: string;
   image: string | null;
+  isPublished: boolean;
 }
+
+export type AlbumWithoutId = Omit<AlbumsTypes, '_id'>;
 
 export interface TracksTypes {
   _id: string;
