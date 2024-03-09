@@ -29,7 +29,11 @@ function App() {
         <Route path="/tracks/:id" element={<Tracks />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/track_history" element={user && <TracksHistory />} />
+        <Route path="/track_history" element={
+          <ProtectedRoute isAllowed={user && user.role !== ''}>
+            {user && <TracksHistory/>}
+          </ProtectedRoute>
+        } />
         <Route path="/new/artist" element={
           <ProtectedRoute isAllowed={user && user.role !== ''}>
             <ArtistsForm />

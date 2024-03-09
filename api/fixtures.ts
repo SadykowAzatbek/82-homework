@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import crypto from "crypto";
 import config from "./config";
 import Artist from "./models/Artist";
 import Album from "./models/Album";
@@ -23,7 +24,7 @@ const run = async () => {
    await dropCollection(db, collectionName);
  }
 
-  const [TaylorSwift, KendrickLamar] = await Artist.create(
+  const [TaylorSwift, KendrickLamar, MaksBarskih] = await Artist.create(
     {
       name: 'Taylor Swift',
       image: 'images/fb8a4c4c-9b58-447f-9287-f3d24437545f.jpeg',
@@ -36,6 +37,12 @@ const run = async () => {
       image: 'images/5981d988-9834-4cf5-aef7-0ef3c3d28b5d.jpeg',
       info: 'Kendrick Lamar Duckworth — американский рэпер и автор песен, родившийся 17 июня 1987 года в Комптоне, Калифорния, США.',
       isPublished: true,
+    },
+    {
+      name: 'Макс Барских',
+      image: 'images/7f8d2ebd-2523-4827-b302-d8d49140087f.jpeg',
+      info: 'вввввв',
+      isPublished: false,
     },
   );
 
@@ -52,6 +59,13 @@ const run = async () => {
      name: '1989',
      release: 2014,
      image: 'images/354b897b-b0b0-482c-9cfe-831f623ffefa.jpeg',
+     isPublished: true,
+   },
+   {
+     artist: TaylorSwift,
+     name: 'Fearless',
+     release: 2008,
+     image: 'images/32dcb6f7-02cd-49e8-8ada-36351f777874.jpeg',
      isPublished: true,
    },
    {
@@ -295,6 +309,40 @@ const run = async () => {
       duration: '4:28',
       number: 7,
       isPublished: true,
+    },
+  );
+
+  const monatik = await Album.create(
+    {
+      artist: MaksBarskih,
+      name: 'Monatik',
+      release: 2012,
+      image: 'images/e02b0db6-6730-4753-921e-fac577f685f3.jpeg',
+      isPublished: false,
+    },
+  );
+
+  await Track.create(
+    {
+      album: monatik,
+      name: 'These ',
+      duration: '1:01',
+      number: 3,
+      isPublished: false,
+    },
+    {
+      album: monatik,
+      name: 'CAts)',
+      duration: '3:41',
+      number: 1,
+      isPublished: false,
+    },
+    {
+      album: monatik,
+      name: 'These Walls (feat. Bilal, Anna Wise & Thundercat)',
+      duration: '5:01',
+      number: 2,
+      isPublished: false,
     },
   );
 
