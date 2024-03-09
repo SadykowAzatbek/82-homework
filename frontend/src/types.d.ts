@@ -3,7 +3,10 @@ export interface ArtistsTypes {
   name: string;
   image: string | null;
   info: string;
+  isPublished: boolean;
 }
+
+export type ArtistWithoutId = Omit<ArtistsTypes, '_id'>;
 
 export interface AlbumsTypes {
   _id: string;
@@ -35,6 +38,7 @@ export interface UserTypes {
   _id: string;
   username: string;
   token: string;
+  role: string;
 }
 
 export interface ValidationError {

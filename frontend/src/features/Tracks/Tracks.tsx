@@ -63,12 +63,12 @@ const Tracks = () => {
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                   {'duration: ' + elem.duration}
                 </Typography>
-                <Button sx={{p: '3px'}} color='inherit' onClick={() => tracksHistory(elem._id)}>
+                {user && <Button sx={{p: '3px'}} color='inherit' onClick={() => tracksHistory(elem._id)}>
                   <Avatar sx={{mr: 1, bgcolor: 'error.main'}}>
                     <PlayCircleIcon />
                   </Avatar>
                   Play
-                </Button>
+                </Button>}
               </CardContent>
             </Card>
           </Grid>

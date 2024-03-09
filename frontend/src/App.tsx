@@ -10,6 +10,8 @@ import Login from './features/Users/Login.tsx';
 import {useAppSelector} from './App/hooks.ts';
 import {selectUser} from './features/Users/usersSlice.ts';
 import TracksHistory from './features/Tracks/TracksHistory.tsx';
+import ArtistsForm from './features/Artists/ArtistsForm.tsx';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.tsx';
 
 function App() {
   const user = useAppSelector(selectUser);
@@ -20,12 +22,17 @@ function App() {
         <AppToolbar />
       </header>
       <Routes>
-        <Route path="/" element={user && <Artists />} />
-        <Route path="/albums/:id" element={user && <Albums />} />
-        <Route path="/tracks/:id" element={user && <Tracks />} />
+        <Route path="/" element={<Artists />} />
+        <Route path="/albums/:id" element={<Albums />} />
+        <Route path="/tracks/:id" element={<Tracks />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/track_history" element={<TracksHistory />} />
+        <Route path="/track_history" element={user && <TracksHistory />} />
+        <Route path="/new/artist" element={
+          <ProtectedRoute isAllowed={user && user.role !== ''}>
+            <ArtistsForm />
+          </ProtectedRoute>
+        } />
         <Route path="*" element={<Alert severity="error">Not found!</Alert>} />
       </Routes>
     </>
