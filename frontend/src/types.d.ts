@@ -27,6 +27,8 @@ export interface TracksTypes {
   number: number;
 }
 
+export type TrackWithoutId = Omit<TracksTypes, '_id'>;
+
 export interface RegisterMutation {
   username: string;
   password: string;

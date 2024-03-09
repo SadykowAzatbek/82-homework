@@ -16,6 +16,20 @@ export const getAlbums = createAsyncThunk<AlbumsTypes[], string>(
   },
 );
 
+export const getAllAlbums = createAsyncThunk<AlbumsTypes[]>(
+  'albums/get',
+  async () => {
+    const response = await axiosApi.get<AlbumsTypes[]>('/albums');
+    const albums = response.data;
+
+    if (!albums) {
+      return [];
+    }
+
+    return albums;
+  },
+);
+
 export const addAlbum = createAsyncThunk<void, AlbumWithoutId>(
   'add/albums',
   async (data) => {

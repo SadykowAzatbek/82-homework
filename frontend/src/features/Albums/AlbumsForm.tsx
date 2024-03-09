@@ -1,4 +1,4 @@
-import {Box, Button, Grid, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
+import {Box, Button, Grid, MenuItem, Select, SelectChangeEvent, TextField, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import FileInput from '../../components/UI/FileInput.tsx';
 import {useNavigate} from 'react-router-dom';
@@ -64,6 +64,7 @@ const AlbumsForm = () => {
 
   return (
     <>
+      <Typography variant="h4">Add album</Typography>
       <Box component="form" onSubmit={formSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -79,7 +80,6 @@ const AlbumsForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
               label="release"
               name="release"
               autoComplete="release"

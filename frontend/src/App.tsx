@@ -13,6 +13,7 @@ import TracksHistory from './features/Tracks/TracksHistory.tsx';
 import ArtistsForm from './features/Artists/ArtistsForm.tsx';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.tsx';
 import AlbumsForm from './features/Albums/AlbumsForm.tsx';
+import TracksForm from './features/Tracks/TracksForm.tsx';
 
 function App() {
   const user = useAppSelector(selectUser);
@@ -37,6 +38,11 @@ function App() {
         <Route path="/new/album" element={
           <ProtectedRoute isAllowed={user && user.role !== ''}>
             <AlbumsForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/new/track" element={
+          <ProtectedRoute isAllowed={user && user.role !== ''}>
+            <TracksForm />
           </ProtectedRoute>
         } />
         <Route path="*" element={<Alert severity="error">Not found!</Alert>} />

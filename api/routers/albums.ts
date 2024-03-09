@@ -10,11 +10,17 @@ const albumsRouter = Router();
 
 albumsRouter.get('/', async (req, res, next) => {
   try {
+    const albums = await Album.find();
+
     const artistIdParam = req.query.artist as string;
 
-    const results = await Album.find({artist: artistIdParam}).sort({release: -1});
+    if (artistIdParam) {
+      const results = await Album.find({artist: artistIdParam}).sort({release: -1});
 
-    return res.send(results);
+      return res.send(results);
+    }
+
+    return res.send(albums);
   } catch (err) {
     next(err);
   }
@@ -84,6 +90,8 @@ albumsRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
     if (!album) {
       return res.status(403).send({error: `Album not found!`});
     }
+
+    await album.save();
 
     return res.send({message: 'Album deleted!'});
   } catch (err) {
