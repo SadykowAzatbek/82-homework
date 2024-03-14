@@ -7,6 +7,7 @@ import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
 import {selectRegisterError} from './usersSlice.ts';
 import {newUser} from './usersThunks.ts';
+import FileInput from '../../components/UI/FileInput.tsx';
 const Register = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectRegisterError);
@@ -16,6 +17,8 @@ const Register = () => {
   const [state, setState] = useState<RegisterMutation>({
     email: '',
     password: '',
+    displayName: '',
+    image: null,
   });
 
   const getFieldError = (fieldName: string) => {
@@ -33,6 +36,15 @@ const Register = () => {
     });
   };
 
+  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, files} = e.target;
+    if (files) {
+      setState(prevState => ({
+        ...prevState, [name]: files[0]
+      }));
+    }
+  };
+
   const submitFormHandler = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -43,6 +55,7 @@ const Register = () => {
 
     }
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -87,6 +100,23 @@ const Register = () => {
                 helperText={getFieldError('password')}
                 fullWidth
               />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                name="displayName"
+                label="username"
+                type="displayName"
+                value={state.displayName}
+                onChange={inputChangeHandler}
+                autoComplete="new-displayName"
+                error={Boolean(getFieldError('displayName'))}
+                helperText={getFieldError('displayName')}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sx={{mt: 2}}>
+              <FileInput name="image" label="avatar" onChange={fileInputChangeHandler} />
             </Grid>
           </Grid>
           <Button

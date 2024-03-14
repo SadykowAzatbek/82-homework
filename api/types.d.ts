@@ -29,7 +29,7 @@ export interface UserTypes {
   token: string;
   role: string;
   displayName: string;
-  avatar: string;
+  image: string | null;
   googleID: string;
 }
 

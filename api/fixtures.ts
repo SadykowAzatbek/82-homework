@@ -352,12 +352,14 @@ const run = async () => {
       password: '123',
       token: crypto.randomUUID(),
       role: 'admin',
+      displayName: 'admin'
     },
     {
       email: 'user@music.local',
       password: '123',
       token: crypto.randomUUID(),
       role: 'user',
+      displayName: 'user'
     },
   )
 

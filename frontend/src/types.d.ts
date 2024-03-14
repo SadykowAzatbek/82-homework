@@ -33,6 +33,8 @@ export type TrackWithoutId = Omit<TracksTypes, '_id'>;
 export interface RegisterMutation {
   email: string;
   password: string;
+  displayName: string;
+  image: string | null;
 }
 
 export interface LoginMutation {
@@ -46,7 +48,7 @@ export interface UserTypes {
   token: string;
   role: string;
   displayName: string;
-  avatar: string | null;
+  image: string | null;
 }
 
 export interface ValidationError {

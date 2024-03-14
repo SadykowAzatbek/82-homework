@@ -9,7 +9,17 @@ export const newUser = createAsyncThunk<RegisterResponse, RegisterMutation, {rej
   'users/register',
   async (registerMutation, {rejectWithValue}) => {
     try {
-      const response = await axiosApi.post('/users', registerMutation);
+      const formData = new FormData();
+
+      formData.append('email', registerMutation.email);
+      formData.append('password', registerMutation.password);
+      formData.append('displayName', registerMutation.displayName);
+
+      if (registerMutation.image) {
+        formData.append('image', registerMutation.image);
+      }
+
+      const response = await axiosApi.post('/users', formData);
       return response.data;
     } catch (err) {
       if (isAxiosError(err) && err.response && err.response.status === 422) {

@@ -65,7 +65,7 @@ const Albums = () => {
             {user?.role === 'admin' ? <Card sx={{maxWidth: 345}}>
               <CardActionArea>
                 <RouterLink to={`/tracks/${elem._id}`}>
-                  {elem.image !== null ? <ImageCardMedia image={'http://localhost:8000' + '/' + elem.image}/> : ''}
+                  {elem.image !== null ? <ImageCardMedia image={'http://localhost:8000/' + elem.image}/> : ''}
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {elem.name}
