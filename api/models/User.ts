@@ -6,19 +6,23 @@ import {UserMethods, UserModel, UserTypes} from "../types";
 const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema<UserTypes, UserModel, UserMethods>({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
     validate: {
       validator: async function(this: HydratedDocument<UserTypes>, value: string): Promise<Boolean> {
-        if (!this.isModified('username')) return true;
+        if (!this.isModified('email')) return true;
 
-        const user: HydratedDocument<UserTypes> | null = await User.findOne({username: value});
+        const user: HydratedDocument<UserTypes> | null = await User.findOne({email: value});
         return !user;
       },
       message: "This user is already registered!",
     }
+  },
+  displayName: {
+    type: String,
+    required: true,
   },
   password: {
     type: String,
@@ -33,7 +37,9 @@ const UserSchema = new Schema<UserTypes, UserModel, UserMethods>({
     required: true,
     enum: ['admin', 'user'],
     default: 'user',
-  }
+  },
+  avatar: String,
+  googleID: String,
 });
 
 UserSchema.methods.checkPassword = function (password: string) {

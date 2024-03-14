@@ -14,7 +14,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [state, setState] = useState<RegisterMutation>({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -64,13 +64,13 @@ const Register = () => {
             <Grid item xs={12}>
               <TextField
                 required
-                label="Username"
-                name="username"
-                value={state.username}
+                label="E-mail"
+                name="email"
+                value={state.email}
                 onChange={inputChangeHandler}
-                autoComplete="new-username"
-                error={Boolean(getFieldError('username'))}
-                helperText={getFieldError('username')}
+                autoComplete="new-email"
+                error={Boolean(getFieldError('email'))}
+                helperText={getFieldError('email')}
                 fullWidth
               />
             </Grid>

@@ -24,10 +24,13 @@ export interface TrackTypes {
 }
 
 export interface UserTypes {
-  username: string;
+  email: string;
   password: string;
   token: string;
   role: string;
+  displayName: string;
+  avatar: string;
+  googleID: string;
 }
 
 interface UserMethods {

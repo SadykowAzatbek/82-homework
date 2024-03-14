@@ -31,20 +31,22 @@ export interface TracksTypes {
 export type TrackWithoutId = Omit<TracksTypes, '_id'>;
 
 export interface RegisterMutation {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface LoginMutation {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface UserTypes {
   _id: string;
-  username: string;
+  email: string;
   token: string;
   role: string;
+  displayName: string;
+  avatar: string | null;
 }
 
 export interface ValidationError {
