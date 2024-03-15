@@ -30,6 +30,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/login');
   };
 
   const toNewArtist = () => {

@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AlbumsTypes, AlbumWithoutId} from '../../types';
+import {AlbumsTypes, AlbumWithoutId, OneAlbum} from '../../types';
 import axiosApi from '../../axiosApi.ts';
 
 export const getAlbums = createAsyncThunk<AlbumsTypes[], string>(
@@ -13,6 +13,18 @@ export const getAlbums = createAsyncThunk<AlbumsTypes[], string>(
     }
 
     return items;
+  },
+);
+
+export const getAlbum = createAsyncThunk<OneAlbum, string>(
+  'get/oneAlbum',
+  async (id) => {
+    try {
+      const response = await axiosApi.get<OneAlbum>('/albums/' + id);
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
   },
 );
 
@@ -38,7 +50,7 @@ export const addAlbum = createAsyncThunk<void, AlbumWithoutId>(
 
       formData.append('artist', data.artist);
       formData.append('name', data.name);
-      formData.append('release', data.release);
+      formData.append('release', data.release.toString());
 
       if (data.image) {
         formData.append('image', data.image);

@@ -12,12 +12,22 @@ export interface AlbumsTypes {
   _id: string;
   artist: string;
   name: string;
-  release: string;
+  release: number;
   image: string | null;
   isPublished: boolean;
 }
 
 export type AlbumWithoutId = Omit<AlbumsTypes, '_id'>;
+
+export interface OneAlbum {
+  artist: {
+    _id: string;
+    name: string;
+  };
+  name: string;
+  release: number;
+
+}
 
 export interface TracksTypes {
   _id: string;

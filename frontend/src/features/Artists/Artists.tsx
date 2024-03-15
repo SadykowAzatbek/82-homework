@@ -37,18 +37,20 @@ const Artists = () => {
 
   const publish = async (id: string) => {
     await dispatch(publishArtist(id));
+    await dispatch(getArtists());
   };
 
   const deleteOneArtist = async (id: string) => {
     await dispatch(deleteArtist(id));
+    await dispatch(getArtists());
   };
 
   return (
     <>
       {<Grid container spacing={3} mt={3}>
         {!isLoading ? artists.map((elem) => (
-          <Grid item xs={3} key={elem._id}>
-            {user?.role === 'admin' ? <Card sx={{maxWidth: 500}}>
+          <Grid item key={elem._id}>
+            {user && user.role === 'admin' ? <Card sx={{maxWidth: 500}}>
               <CardActionArea component="div">
                 <RouterLink to={`/albums/${elem._id}`} style={{textDecoration: 'none'}}>
                   {elem.image !== null ? <ImageCardMedia image={`http://localhost:8000/${elem.image}`}/> : ''}
@@ -56,22 +58,20 @@ const Artists = () => {
                     <Typography gutterBottom variant="h5" component="div">
                       {elem.name}
                     </Typography>
-                    {user && user.role === 'admin' ? <Typography gutterBottom component="div">
+                    <Typography gutterBottom component="div">
                       Статус: {!elem.isPublished ? 'неопубликовано' : 'опубликовано'}
-                    </Typography> : ''}
+                    </Typography>
                   </CardContent>
                 </RouterLink>
-                {user && user.role === 'admin' ? (
-                  <Typography component="div" sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Button sx={{color: 'red'}} onClick={() => deleteOneArtist(elem._id)}>Удалить</Button>
-                    <Button onClick={() => publish(elem._id)}>Опубликовать</Button>
-                  </Typography>
-                ) : ''}
+                <Typography component="div" sx={{display: 'flex', justifyContent: 'space-between'}}>
+                  <Button sx={{color: 'red'}} onClick={() => deleteOneArtist(elem._id)}>Удалить</Button>
+                  <Button onClick={() => publish(elem._id)}>{elem.isPublished ? 'Снять с публикации' : 'Опубликовать'}</Button>
+                </Typography>
               </CardActionArea>
-            </Card> : user?.role === "user" && elem.isPublished ? <Card sx={{maxWidth: 500}}>
+            </Card> : elem.isPublished ? <Card sx={{maxWidth: 500}}>
               <CardActionArea component="div">
                 <RouterLink to={`/albums/${elem._id}`} style={{textDecoration: 'none'}}>
-                  {elem.image !== null ? <ImageCardMedia image={`http://localhost:8000/${elem.image}`}/> : ''}
+                  {elem.image ? <ImageCardMedia image={`http://localhost:8000/${elem.image}`}/> : ''}
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {elem.name}

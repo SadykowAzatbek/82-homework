@@ -24,7 +24,7 @@ const AlbumsForm = () => {
   const [state, setState] = useState<AlbumWithoutId>({
     artist: '',
     name: '',
-    release: '',
+    release: 0,
     image: '',
     isPublished: false,
   });
@@ -80,6 +80,7 @@ const AlbumsForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              type="number"
               label="release"
               name="release"
               autoComplete="release"

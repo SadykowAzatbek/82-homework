@@ -26,6 +26,7 @@ const TracksForm = () => {
     name: '',
     duration: '',
     number: 0,
+    isPublished: false,
   });
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
