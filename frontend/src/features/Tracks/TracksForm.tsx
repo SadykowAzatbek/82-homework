@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, CircularProgress, Grid, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography
+} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../App/hooks.ts';
 import {TrackWithoutId} from '../../types';
@@ -53,6 +63,7 @@ const TracksForm = () => {
   };
   return (
     <>
+      <Typography variant="h6" component="div" sx={{mb: 2}}>Add new track</Typography>
       <Box component="form" onSubmit={handleFormSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
